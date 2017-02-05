@@ -1,0 +1,53 @@
+prontera,165,205,4	script	Jimmy the Save Cat	422,{   
+
+getmapxy(.@map$, .@x, .@y, 0);
+
+    savepoint .@map$, .@x, .@y;
+	npctalk "Your savepoint has been saved";
+    end;
+	
+	OnInit:
+	waitingroom "Save",0;
+	end;
+}
+
+alb2trea,62,72,4	duplicate(Jimmy the Save Cat)	SaveCat#tre	422
+alberta,32,240,4	duplicate(Jimmy the Save Cat)	SaveCat#alb	422
+aldebaran,145,115,2	duplicate(Jimmy the Save Cat)	SaveCat#alde	422
+amatsu,203,84,2	duplicate(Jimmy the Save Cat)	SaveCat#ama	422
+ayothaya,207,169,4	duplicate(Jimmy the Save Cat)	SaveCat#ayo	422
+comodo,184,158,4	duplicate(Jimmy the Save Cat)	SaveCat#com	422
+einbech,60,44,6	duplicate(Jimmy the Save Cat)	SaveCat#einbe	422
+einbroch,59,200,6	duplicate(Jimmy the Save Cat)	SaveCat#einbr	422
+geffen,124,69,2	duplicate(Jimmy the Save Cat)	SaveCat#gef	422
+glast_01,367,308,4	duplicate(Jimmy the Save Cat)	SaveCat#glh	422
+gonryun,156,122,4	duplicate(Jimmy the Save Cat)	SaveCat#gon	422
+hugel,101,148,2	duplicate(Jimmy the Save Cat)	SaveCat#hug	422
+izlude,121,151,4	duplicate(Jimmy the Save Cat)	SaveCat#izl	422
+jawaii,247,141,2	duplicate(Jimmy the Save Cat)	SaveCat#jaw	422
+lighthalzen,167,102,4	duplicate(Jimmy the Save Cat)	SaveCat#lhz	422
+louyang,204,103,4	duplicate(Jimmy the Save Cat)	SaveCat#lou	422
+manuk,272,143,6	duplicate(Jimmy the Save Cat)	SaveCat#man	422
+mid_camp,220,288,4	duplicate(Jimmy the Save Cat)	SaveCat#mid	422
+moc_ruins,74,167,4	duplicate(Jimmy the Save Cat)	SaveCat#moc	422
+morocc,164,97,4	duplicate(Jimmy the Save Cat)	SaveCat#mor	422
+moscovia,220,191,4	duplicate(Jimmy the Save Cat)	SaveCat#mos	422
+payon,194,105,4	duplicate(Jimmy the Save Cat)	SaveCat#pay	422
+rachel,130,117,4	duplicate(Jimmy the Save Cat)	SaveCat#rac	422
+splendide,208,153,4	duplicate(Jimmy the Save Cat)	SaveCat#spl	422
+thor_camp,245,76,4	duplicate(Jimmy the Save Cat)	SaveCat#thor	422
+umbala,95,157,5	duplicate(Jimmy the Save Cat)	SaveCat#umb	422
+veins,211,123,4	duplicate(Jimmy the Save Cat)	SaveCat#ve	422
+xmas,155,136,4	duplicate(Jimmy the Save Cat)	SaveCat#xmas	422
+yuno,164,45,2	duplicate(Jimmy the Save Cat)	SaveCat#yuno	422
+
+// --------------------------------------------------
+//	Duplicates (Renewal):
+// --------------------------------------------------
+brasilis,193,221,4	duplicate(Jimmy the Save Cat)	SaveCat#bra	422
+dewata,196,187,2	duplicate(Jimmy the Save Cat)	SaveCat#dew	422
+dicastes01,197,195,4	duplicate(Jimmy the Save Cat)	SaveCat#dic	422
+ecl_in01,45,60,5	duplicate(Jimmy the Save Cat)	SaveCat#ecl	422
+malangdo,138,117,4	duplicate(Jimmy the Save Cat)	SaveCat#mal	422
+malaya,218,208,2	duplicate(Jimmy the Save Cat)	SaveCat#ma	422
+mora,61,148,2	duplicate(Jimmy the Save Cat)	SaveCat#mora	422

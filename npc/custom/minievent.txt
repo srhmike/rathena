@@ -1,0 +1,19 @@
+//Entrance
+prontera,164,163,1	script	Mini Event Area	723,{
+warp "paramk",98,77;
+end;
+//Waiting Room
+OnInit:
+waitingroom "Mini Event Area",0;
+end;
+}
+
+//The Exit
+paramk,97,68,5	script	Mini Event Exit	723,{
+warp "prontera" ,156,173;
+end;
+//Waiting Room
+OnInit:
+waitingroom "Exit",0;
+end;
+}

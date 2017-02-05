@@ -1,0 +1,218 @@
+//===============================
+//=====NPC scripted by Enthr=====
+//==== Sist. for buying MVPS ====
+//=========== by time ===========
+
+prontera.gat,186,210,3	script	MVP Rooms::roommvp01	55,{
+	mes "[MVP Rooms]";
+	mes "Hello, 풲o witch room do you want to go?";
+	switch(select("room 1 ("+getmapusers("06guild_01")+"):room 2 ("+getmapusers("06guild_02")+"):room 3 ("+getmapusers("06guild_03")+"):room 4 ("+getmapusers("06guild_04")+"):Exit")){
+		case 5:
+			close;
+		case 1:
+			warp "06guild_01",50,45;
+			end;
+		case 2:
+			warp "06guild_02",50,45;
+			end;
+		case 3:
+			warp "06guild_03",50,45;
+			end;
+		case 4:
+			warp "06guild_04",50,45;
+			end;
+	}
+	
+	close;
+	OnInit:
+		setmapflag "06guild_01",mf_nowarpto;
+		setmapflag "06guild_01",mf_nomemo;
+		setmapflag "06guild_01",mf_noteleport;
+		setmapflag "06guild_01",mf_nosave;
+		setmapflag "06guild_01",mf_nopenalty;
+		
+		setmapflag "06guild_02",mf_nowarpto;
+		setmapflag "06guild_02",mf_nomemo;
+		setmapflag "06guild_02",mf_noteleport;
+		setmapflag "06guild_02",mf_nosave;
+		setmapflag "06guild_02",mf_nopenalty;
+		
+		setmapflag "06guild_03",mf_nowarpto;
+		setmapflag "06guild_03",mf_nomemo;
+		setmapflag "06guild_03",mf_noteleport;
+		setmapflag "06guild_03",mf_nosave;
+		setmapflag "06guild_03",mf_nopenalty;
+		
+		setmapflag "06guild_04",mf_nowarpto;
+		setmapflag "06guild_04",mf_nomemo;
+		setmapflag "06guild_04",mf_noteleport;
+		setmapflag "06guild_04",mf_nosave;
+		setmapflag "06guild_04",mf_nopenalty;
+		end;
+}
+
+06guild_01.gat,50,54,4	script	MVP Spawner::mvpsi01	450,{
+	//======================================
+	//===Variables needed for the NPC===
+	//======================================
+	set @timewait, 1200;//=> the amount of time to wait to spawn the same monster
+	set .@costofMVP, 1000000;//=> the amount of zenys to spawn a MVP
+	set .@costofmBoss,400000;//=> the amount of zenys to spawn a mini mvp 
+	set .@nam$,"[Spawner]";//=> The name of the npc that its shown in the dialoge
+	//setarray .@MVPN$[0],"Amun RA","Atroce","Baphomet","Beelzebub","Boitata","Daehyon"... 
+	//===
+	// In the following line is the list of MVP that will be shown in the list to spawn a MVP
+	setarray .@MVP[0],1511,1785,1039,1874,2068,2253,1272,1719,1046,1389,1112,1115,1418;
+	// In the following line is the list of Mini bosses that will be shown in the list to spawn a Mini Boss
+	setarray .@MBSS[0],1630;
+
+	//End of editable variables
+	if(@timewait < 0)
+		set @timewait, 0;
+	if(.@costofMVP < 0)
+		set .@costofMVP, 0;
+	if(.@costofmBoss < 0)
+		set .@costofmBoss, 0;
+	
+	
+	L_START:
+		mes .@nam$;
+		mes "Greetings "+strcharinfo(0)+", tell me, what do you want, a MVP or a mini boss?";
+		mes "A MVP cost ^FF0000"+.@costofMVP+" zenys^000000.";
+		mes "A mini boss cost ^FF0000"+.@costofmBoss+" zenys^000000.";
+		if(@timewait >= 60)
+			mes "And the time wait to spawn a monster of the same type its of  ^FF0000"+@timewait/60+"^000000 minutes";
+		else
+			mes "And the time wait to spawn a monster of the same type its of  ^FF0000"+@timewait+"^000000 seconds";
+		switch(select("I want to buy a MVP:I want to buy a mini boss:Return to prontera:Exit")){
+			next;
+			mes .@nam$;
+			case 4:
+				mes "Bye.";
+				close;
+			case 3:
+				mes "To the next one.";
+				next;
+				warp "prontera",156,190;
+				end;
+			case 2:
+				mes "풵hat mini boss do you want to spawn?";
+				goto L_MBSS;
+			case 1:
+				mes "풵hat MVP do you want to spawn?";
+				goto L_MVP;		
+		}
+	
+	L_MVP:
+		set .@i, getarraysize(.@MVP)/10;
+		set .@n, 0;
+		set .@sig, 0;
+		for(set .@j, 0; .@j <= .@i; set .@j, .@j + 1){
+			set .@menu$,"Exit";
+			for(set .@i, 0; .@i < 10; set .@i, .@i + 1){
+				if(.@MVP[.@n] > 0)
+					set .@menu$,.@menu$+":"+strmobinfo(2,.@MVP[.@n]);
+				set .@n, .@n + 1;
+					
+			}
+			if(.@n < getarraysize(.@MVP))
+				set .@menu$,.@menu$+":Next";
+			set .@option, select(.@menu$)- 2;
+			next;
+			mes .@nam$;
+			if(.@option == -1){
+				mes "To the next one.";
+				close;
+			}
+			if(.@option != 10){
+				if(.@sig > 0) set .@option, (10*.@sig)+.@option;
+				mes "We will spawn a "+strmobinfo(2,.@MVP[.@option])+", correct?";
+				switch(select("Yes, spawn it.:No, cancel it")){
+					case 2:
+						goto L_MVP;
+					case 1:
+						if(getd("timeofwait"+.@MVP[.@option]) > gettimetick(2)){
+							mes "I'm sorry, but you have to wait "+(getd("timeofwait"+.@MVP[.@option])-gettimetick(2))+" seconds before asking for other "+strmobinfo(2,.@MVP[.@option])+", somebody already asked it.";
+							goto L_MVP;
+						}
+						else {
+							getmapxy(.@m$,.@x,.@y,1);
+							if(Zeny >= .@costofMVP){
+								set Zeny, Zeny - .@costofMVP;
+								monster .@m$,.@x-1,.@y-1,"--ja--",.@MVP[.@option],1;
+								setd("timeofwait"+.@MVP[.@option],(gettimetick(2)+@timewait));
+								close;
+							}
+							else {
+								mes "Why do you waste my time if you dont have money?";
+								close;
+							
+							}
+						}
+				}
+					
+					
+			}
+			set .@sig, .@sig + 1;
+			mes "What MVP do you want to spawn?";
+		}
+	
+	L_MBSS:
+		set .@i, getarraysize(.@MBSS)/10;
+		set .@n, 0;
+		set .@sig, 0;
+		for(set .@j, 0; .@j <= .@i; set .@j, .@j + 1){
+			set .@menu$,"Exit";
+			for(set .@i, 0; .@i < 10; set .@i, .@i + 1){
+				if(.@MVP[.@n] > 0)
+					set .@menu$,.@menu$+":"+strmobinfo(2,.@MBSS[.@n]);
+				set .@n, .@n + 1;
+					
+			}
+			if(.@n < getarraysize(.@MBSS))
+				set .@menu$,.@menu$+":Next";
+			set .@option, select(.@menu$)- 2;
+			next;
+			mes .@nam$;
+			if(.@option == -1){
+				mes "See you soon.";
+				close;
+			}
+			if(.@option != 10){
+				if(.@sig > 0) set .@option, (10*.@sig)+.@option;
+				mes "We will spawn a  "+strmobinfo(2,.@MBSS[.@option])+", correct?";
+				switch(select("Yes, spawn it.:No, cancel it")){
+					case 2:
+						goto L_MBSS;
+					case 1:
+						if(getd("timeofwait"+.@MBSS[.@option]) > gettimetick(2)){
+							mes "I'm sorry, but you have to wait "+(getd("timeofwait"+.@MBSS[.@option])-gettimetick(2))+" seconds before asking for another "+strmobinfo(2,.@MBSS[.@option])+", somebody already asked it.";
+							goto L_MBSS;
+						}
+						else {
+							getmapxy(.@m$,.@x,.@y,1);
+							if(Zeny >= .@costofmBoss){
+								set Zeny, Zeny - .@costofmBoss;
+								monster .@m$,.@x-1,.@y-1,"--ja--",.@MBSS[.@option],1;
+								setd("timeofwait"+.@MBSS[.@option],(gettimetick(2)+@timewait));
+								close;
+							}
+							else {
+								mes "Why do you waste my time if you dont have money?";
+								close;
+							
+							}
+						}
+				}
+					
+					
+			}
+			set .@sig, .@sig + 1;
+			mes "풵hat mini boss do you want?";
+		}
+}
+
+
+06guild_02.gat,50,54,4	duplicate(mvpsi01)	MVP Spawner::mvpsi02	450
+06guild_03.gat,50,54,4	duplicate(mvpsi01)	MVP Spawner::mvpsi03	450
+06guild_04.gat,50,54,4	duplicate(mvpsi01)	MVP Spawner::mvpsi04	450

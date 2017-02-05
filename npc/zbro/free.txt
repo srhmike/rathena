@@ -1,0 +1,44 @@
+//~~~~~Mobs
+new_zone01,0,0,0,0	monster	Lunatic	1063,300,5000,0,0
+new_zone01,0,0,0,0	monster	Poring	1002,300,5000,0,0
+new_zone01,0,0,0,0	monster	Fabre	1007,300,5000,0,0
+//~~~~~
+new_zone01,137,122,4	script	Freebies	718,{
+if( !#Freebies ){
+set #Freebies,1;
+mes "Welcome to zbRO, Here are your start items!";
+mes "You only get this once for each account!";
+getitem 31004,1;
+getitem 31005,1;
+getitem 31006,1;
+getitem 31007,1;
+getitem 31008,1;
+getitem 501,10;
+}else{
+mes "You have claim the Reward already.";
+close;
+}
+OnInit:
+waitingroom "Free Items",0;
+end;
+}
+-	script	baselvl_kick_map	-1,{
+	
+	OnInit:
+		.max_level = 35;
+		.map$ = "new_zone01";
+		setmapflag .map$,mf_loadevent;
+		end;
+		
+	OnPCLoadMapEvent:
+		if ( strcharinfo(3) == .map$ && BaseLevel >= .max_level ) {
+			warp "prontera",150,150;
+		}
+		end;
+		
+	OnPCBaseLvUpEvent:
+		if ( strcharinfo(3) == .map$ && BaseLevel >= .max_level ) {
+			warp "prontera",150,150;
+		}
+		end;
+}

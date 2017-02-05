@@ -16,7 +16,7 @@
 //= 1.4 Rebellion added.
 //============================================================
 
-prontera,153,193,6	script	Job Master	123,{
+prontera,152,205,4	script	Job Master	123,{
 function Job_Menu;
 
 	mes "[Job Master]";
@@ -302,5 +302,8 @@ OnInit:
 	.LastJob = 1;				// Enforce linear class changes? (1: yes / 0: no)
 	.SkillPointCheck = 1;		// Force player to use up all skill points? (1: yes / 0: no)
 	.Platinum = 1;				// Get platinum skills automatically? (1: yes / 0: no)
+		
+	waitingroom "Job Changer",0;
 	end;
+	
 }

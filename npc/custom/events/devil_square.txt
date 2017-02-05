@@ -13,8 +13,8 @@
 //= 1.0 First version, edited. [Euphy]
 //============================================================
 
-prontera,156,185,5	script	Devil Square Guardian#1	406,{
-	set .@gm_level, 99; // GM level required to start/stop the event
+paramk,108,89,2	script	Devil Square Guardian#1	406,{
+	set .@gm_level, 30; // GM level required to start/stop the event
 
 	mes "[Devil Square Guardian]";
 	mes "This is the entrance to ^FF0000Devil Square^000000.";

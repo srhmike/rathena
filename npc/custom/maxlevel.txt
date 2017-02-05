@@ -1,0 +1,13 @@
+-	script	MaxLevelAnnouncer	-1,{
+	end;
+
+	OnPCBaseLvUpEvent:
+				if (BaseLevel==.MaxLvl) {
+				announce strcharinfo(0)+", has reached level "+.MaxLvl+", good job!",0;
+			}
+		end;
+
+	OnInit:
+		// Set here the maximum level of your server
+		set .MaxLvl, 255;
+}

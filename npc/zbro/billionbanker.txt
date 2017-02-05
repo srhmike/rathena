@@ -1,0 +1,108 @@
+//===== rAthena Script =======================================
+//= The Billion Banker
+//===== By: ==================================================
+//= Joseph
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena SVN, r15039+
+//===== Description: =========================================
+//= Withdraw and deposit large amount of Zeny
+//===== Additional Comments: =================================
+//= 1.0 - Released!
+//= 1.1 - Fixed string variable issue.
+//============================================================
+prontera,164,173,5	script	Banker	833,{
+
+	function	FailMessage;
+	function	Transaction;
+	function	Display;
+
+	// == Configurations =========================================
+	set .@mz, 1000000000;	// Server Max Zeny (Default: 1000000000)
+	set .@n$, "[Banker]";	// NPC Name
+	// ===========================================================
+	
+	mes .@n$;
+	mes "Greetings!";
+	mes "How can I help you?";
+	mes " ";
+	mes "Balance: " + Display(#savings);
+	set .@menu$, "Withdraw:Deposit";
+	set .@j, select ( .@menu$ ) - 1;
+	explode(.@menu$,.@menu$,":"); 	
+	next;
+	mes .@n$;
+	mes "How much would you like to " + .@menu$[.@j] + "?";
+	input .@amt,0,.@mz;
+	if ( .@amt == 0 )
+	{
+		next;
+		mes .@n$;
+		mes "^FF0000Invalid input...^000000";
+		close;
+	}
+	next;
+	mes .@n$;
+	mes .@menu$[.@j] + ": " + Display(.@amt);
+	mes " ";
+	mes (.@j!=2)?"Would you like to proceed?":"Thank you!";
+	if ( select ( "Yes:No" ) == 2 ) close;
+	next;
+	mes .@n$;
+	if ( FailMessage(.@j,.@amt,.@mz) != "" )
+	{
+		mes "^FF0000" +@msg$+ "^000000";
+		set @msg$, "";
+		close;
+	}
+	Transaction(.@j,.@amt);
+	mes .@menu$[.@j] + " successful!";
+	close;
+
+	function	FailMessage	{
+	
+		switch (getarg(0))
+		{
+			Case 0:	// Withdraw
+				if ( getarg(2) < (Zeny + getarg(1)) ) set @msg$, "You can't hold that much Zeny.";
+				if ( #savings < getarg(1) ) set @msg$, "You have insufficient amount of Zeny in your bank account.";
+				break;
+				
+			Case 1:	// Deposit
+				if ( Zeny < getarg(1) ) set @msg$, "You have insufficient amount of Zeny on hand.";
+				break;
+		}
+		return @msg$;
+	
+	}
+	
+	function	Transaction	{
+	
+		switch (getarg(0))
+		{
+			Case 0:	// Withdraw
+				set Zeny, Zeny + getarg(1);
+				set #savings, #savings - getarg(1);
+				break;
+				
+			Case 1:	// Deposit
+				set Zeny, Zeny - getarg(1);
+				set #savings, #savings + getarg(1);
+				break;
+		}
+		return;
+		
+	}
+
+	function	Display	{
+
+		set .@d$, getarg(0);
+		for ( set .@i, getstrlen(.@d$) - 3; .@i > 0; set .@i, .@i - 3 )
+			set .@d$, insertchar(.@d$,",",.@i);
+		set .@d$, "^0000FF" +.@d$+ "^000000 z";
+		return .@d$;
+
+	}
+	
+}

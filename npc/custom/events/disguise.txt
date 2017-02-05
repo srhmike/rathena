@@ -15,7 +15,7 @@
 //= 5.1 Cleaned and standardized, mostly. [Euphy]
 //============================================================
 
-prontera,160,155,4	script	Disguise Event	795,{
+paramk,97,87,5	script	Disguise Event	795,{
 
 	// Currently set to run every two hours.
 	// To change times, edit the OnClock labels below.
@@ -49,7 +49,7 @@ prontera,160,155,4	script	Disguise Event	795,{
 			set .EventON,1; set .Timer,1; setnpctimer 0; initnpctimer;
 			set .ResetCounter,.ResetCounter+1;
 			announce "The Disguise Event will begin in 3 minutes.",bc_all | bc_blue;
-			announce "The Event is being held in Prontera.",bc_all | bc_blue;
+			announce "The Event is being held in the Mini Event Area.",bc_all | bc_blue;
 			close;
 		case 2:
 			mes .@n$;
@@ -164,7 +164,7 @@ OnClock2200:
 	set .Timer,1;
 	set .Wait,1;
 	announce "The Disguise Event will begin in 3 minutes.",bc_all | bc_blue;
-	announce "The Event is being held in Prontera.",bc_all | bc_blue;
+	announce "The Event is being held in the Mini Event Area.",bc_all | bc_blue;
 	setnpctimer 0;
 	initnpctimer;
 	end;
@@ -188,17 +188,17 @@ OnTimer30000:
 OnTimer60000:
 	if (.Timer!=1) end;
 	announce "The Disguise Event will begin in 2 minutes.",bc_all | bc_blue;
-	announce "The Event is being held in Prontera.",bc_all | bc_blue;
+	announce "The Event is being held in the Mini Event Area.",bc_all | bc_blue;
 	end;
 OnTimer120000:
 	if (.Timer!=1) end;
 	announce "The Disguise Event will begin 1 minute.",bc_all | bc_blue;
-	announce "The Event is being held in Prontera.",bc_all | bc_blue;
+	announce "The Event is being held in the Mini Event Area.",bc_all | bc_blue;
 	end;
 OnTimer180000:
 	if (.Timer!=1) end;
 	announce "The Disguise Event has begun!",bc_all | bc_blue;
-	announce "The Event is being held in Prontera.",bc_all | bc_blue;
+	announce "The Event is being held in the Mini Event Area.",bc_all | bc_blue;
 	set .Timer,0; stopnpctimer;
 	setnpctimer 0; initnpctimer;
 iDisguise:

@@ -1,0 +1,1 @@
+prontera,162,197,6	shop	Seller	900,501:50
